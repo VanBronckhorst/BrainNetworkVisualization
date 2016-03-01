@@ -1,0 +1,25 @@
+.mainContainer{
+	position: absolute;
+	left:0px;
+	top:0px;
+	height: 100%;
+	width: 100%;
+	margin: 0 0;
+	background-color: #ffffff;
+
+}
+
+.mosaicDivContainer{
+	position: absolute;
+	left:0;
+	top:30%;
+	height: 70%;
+	width: 70%;
+	margin: 0 0;
+	background-color: #cccccc;
+}
+
+.mosaicSvg{
+	height: 100%;
+	width: 100%;
+}
