@@ -19,7 +19,72 @@
 	background-color: #cccccc;
 }
 
+.timelineDivContainer{
+	position: absolute;
+	left:0;
+	top:11%;
+	height: 18%;
+	width: 70%;
+	border: 1px black solid;
+	background-color: white;
+}
+
 .mosaicSvg{
 	height: 100%;
+	width: 100%;
+}
+
+.line{
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+
+}
+.axis{
+    stroke: black;
+    stroke-width: 2;
+    fill: none;
+
+}
+
+.timeWindow{
+	fill: none;
+    stroke: black;
+}
+
+.chooserDivContainer{
+	position: absolute;
+	left:0;
+	top:0;
+	height: 10%;
+	width: 70%;
+}
+.zoomDivContainer{
+	position: absolute;
+	left:0;
+	top:0;
+	height: 50%;
+	width: 50%;
+	background-color: white;
+	visibility: hidden;
+}
+
+.zoomSquareDiv{
+	position: absolute;
+}
+
+.zoomTitleBar{
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 5%;
+	width: 100%;
+	background-color: #888888;
+}
+.zoomContentContainer{
+	position: absolute;
+	top: 6%;
+	left: 0%;
+	height: 94%;
 	width: 100%;
 }
