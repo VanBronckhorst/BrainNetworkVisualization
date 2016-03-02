@@ -13,9 +13,9 @@ public int startTime = 90;
 public int cellSize = 5;  // the number of sub-cells for an individual node
                           // for example, if cellSize = 5, then draw a 5-by-5 barcode showing the community identifications over 25 time steps
 public int proximity_Min = 10;
-public int proximity_Max = 20;
-public double similarity_Min = 0.75;
-public double similarity_Max = 0.85;
+public int proximity_Max = 25;
+public double similarity_Min = 0.85;
+public double similarity_Max = 0.95;
 public int neighbors_Num = 5;
 
 
