@@ -25,13 +25,30 @@ function zoomView(where, commData, pixels , minTime, span){
 	this.offX = 0;
 	this.offY=0;
 	this.dragging = false;
+	this.lastX = 0;
+	this.lastY = 0;
 
 	var drag = d3.behavior.drag()
+		.on("dragstart", function(d,i){
+			that.lastX = d3.event.sourceEvent.pageX;
+			that.lastY = d3.event.sourceEvent.pageY;
+			//console.log(d3.event,that.lastX);
+		})
         .on("drag", function(d,i) {
-            that.offX += d3.event.dx
-            that.offY += d3.event.dy
-            allContainer.attr("transform", function(d,i){
-                return "translate(" + [ that.offX ,that.offY ] + ")"
+        	var dx = d3.event.sourceEvent.pageX - that.lastX;
+        	var dy = d3.event.sourceEvent.pageY - that.lastY;
+
+        	that.lastX = d3.event.sourceEvent.pageX;
+			that.lastY = d3.event.sourceEvent.pageY;
+
+            that.offX += dx;
+            that.offY += dy;
+
+            console.log(dx,dy);
+            allContainer.style("top", function(d,i){
+                return that.offY+"px";
+            }).style("left", function(d,i){
+                return that.offX+"px";
             })
         });
 

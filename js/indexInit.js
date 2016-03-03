@@ -3,10 +3,14 @@ function init(){
 	var r = 130;
 	var c = 172;
 
-	var chooser = new groupsChooserView("#chooserDivContainer");
+
 
 	var mosaic = new mosaicView("#mosaicDivContainer",r,c,communityXTime,0,10);
 	
+	var chooser = new groupsChooserView("#chooserDivContainer");
+	chooser.onClick(function(){
+		mosaic.updateColor();
+	})
 
 
 	var timeLineData=[];

@@ -36,13 +36,14 @@ function groupsChooserView(where){
 	var svg = container.append("svg").attr("class","mosaicSvg")
 									.attr("preserveAspectRatio","none")
 									.attr("viewBox","0 0 " + (w + padding * (2 + len))+ " " + (h + padding * 2));
-
+	this.onClickFun = function(){};
 	
 	// Show the color circles
 	this.update = function(){
 		svg.selectAll(".colorChooser").style("fill",function(d){
 									return colorScale[d];
 								});
+		this.onClickFun();
 	}
 
 
@@ -69,6 +70,10 @@ function groupsChooserView(where){
 								}
 								that.update();
 							});
+	}
+
+	this.onClick = function(fun){
+		this.onClickFun = fun;
 	}
 
 }
