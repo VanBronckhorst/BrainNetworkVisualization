@@ -5,6 +5,7 @@ function init(){
 
 
 
+
 	var mosaic = new mosaicView("#mosaicDivContainer",r,c,communityXTime,0,10);
 	
 	var chooser = new groupsChooserView("#chooserDivContainer");
@@ -24,4 +25,22 @@ function init(){
 	timeLine.onTimeChange(function(min,span){
 		mosaic.changeTimeSpan(min,span);
 	});
+
+	d3.select('.zoomSizeDiv').call(d3.slider()
+							.min(1)
+							.max(10)
+							.value(4)
+							.on("slide", function(evt, value) {
+						      	mosaic.changeLensSize(value);
+						    })
+    );
+
+    d3.select('.lensSizeDiv').call(d3.slider()
+							.min(10)
+							.max(70)
+							.value(50)
+							.on("slide", function(evt, value) {
+						      	mosaic.changeLensDivSize(value);
+						    })
+    );
 }

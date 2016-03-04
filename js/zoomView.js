@@ -44,7 +44,6 @@ function zoomView(where, commData, pixels , minTime, span){
             that.offX += dx;
             that.offY += dy;
 
-            console.log(dx,dy);
             allContainer.style("top", function(d,i){
                 return that.offY+"px";
             }).style("left", function(d,i){

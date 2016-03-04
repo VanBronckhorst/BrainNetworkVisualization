@@ -5,6 +5,7 @@
 
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<link rel="stylesheet"  type="text/css" href="css/brainHome.css">
+	<link rel="stylesheet"  type="text/css" href="css/d3.slider.css">
 	<script type="text/javascript" src="data/colorByTimestamp.json"></script>
 	<script type="text/javascript" src="data/sizebyTimestamp.json"></script>
 
@@ -14,7 +15,7 @@
 	<script type="text/javascript" src="js/groupsChooserView.js"></script>
 	<script type="text/javascript" src="js/mosaicView.js"></script>
 	<script type="text/javascript" src="js/timeLine.js"></script>
-
+	<script type="text/javascript" src="js/d3.slider.js"></script>
 
 	<script type="text/javascript" src="js/indexInit.js"></script>
 </head>
@@ -22,6 +23,18 @@
 	<div class="mainContainer">
 		<div id="chooserDivContainer" class = "chooserDivContainer"> </div>
 		<div id="timelineDivContainer" class="timelineDivContainer"></div>	
+		<div id="sliderDivContainer" class="sliderDivContainer">
+		
+			<div id="lensSizeContainerDiv" class="lensSizeContainerDiv">
+				<div id="lensSizeDiv" class="lensSizeDiv"></div>
+			</div>
+
+			<div id="zoomSizeContainerDiv" class="zoomSizeContainerDiv">
+				<div id="zoomSizeDiv" class="zoomSizeDiv"></div>
+			</div>
+
+
+		</div>
 		<div id="mosaicDivContainer" class="mosaicDivContainer">
 			<div id="zoomDivContainer" class="zoomDivContainer">
 				

@@ -1,3 +1,7 @@
+body{
+	margin: 0 0;
+}
+
 .mainContainer{
 	position: absolute;
 	left:0px;
@@ -22,12 +26,36 @@
 .timelineDivContainer{
 	position: absolute;
 	left:0;
-	top:11%;
-	height: 18%;
+	top:8%;
+	height: 15%;
 	width: 70%;
 	border: 1px black solid;
 	background-color: white;
 }
+.sliderDivContainer{
+	position: absolute;
+	left:0;
+	top:23%;
+	height: 7%;
+	width: 70%;
+}
+
+.lensSizeContainerDiv{
+	position: absolute;
+	left:10%;
+	top:25%;
+	height: 50%%;
+	width: 30%;
+}
+
+.zoomSizeContainerDiv{
+	position: absolute;
+	left:60%;
+	top:25%;
+	height: 50%;
+	width: 30%;
+}
+
 
 .mosaicSvg{
 	height: 100%;
@@ -55,8 +83,8 @@
 .chooserDivContainer{
 	position: absolute;
 	left:0;
-	top:0;
-	height: 10%;
+	top:1%;
+	height: 6%;
 	width: 70%;
 }
 .zoomDivContainer{

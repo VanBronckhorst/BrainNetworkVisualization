@@ -3,12 +3,14 @@ function mosaicView(where,rows,cols,commData,min,span){
 	var r = rows;
 	var c = cols;
 	var that = this;
+	var ZOOM_ID = "#zoomDivContainer";
 
 	this.cols = c;
 	this.rows = rows;
 	this.commData = commData;
 	this.minTimeShown = min;
 	this.span = span;
+
 
 	var cellSize = 10;
 
@@ -51,7 +53,7 @@ function mosaicView(where,rows,cols,commData,min,span){
 											
 											
 
-	var lensRect = svg.append("rect").attr("class","lens")
+	this.lensRect = svg.append("rect").attr("class","lens")
 									.attr("width", this.lensSize * cellSize)
 									.attr("height", this.lensSize * cellSize)
 									.style("fill","transparent")
@@ -66,7 +68,7 @@ function mosaicView(where,rows,cols,commData,min,span){
 											}
 										}
 
-										var zoom = new zoomView("#zoomDivContainer",that.commData,pixels,that.minTimeShown,that.span);
+										that.zoom = new zoomView("#zoomDivContainer",that.commData,pixels,that.minTimeShown,that.span);
 									});
 
 
@@ -75,13 +77,14 @@ function mosaicView(where,rows,cols,commData,min,span){
 												var c = Math.min(d["c"],cols-that.lensSize);
 												var r = Math.min(d["r"],rows-that.lensSize);
 												
-												lensRect.attr("x", c * cellSize)
+												that.lensRect.attr("x", c * cellSize)
 													.attr("y", r * cellSize)
 													.datum({"r":r, "c":c});
 												
 											});
 
 	this.updateColor = function(){
+		d3.select(ZOOM_ID).style("visibility","hidden");
 		svg.selectAll(".tile").attr("fill",function(d,i){
 
 												return that.mostCommon(d["r"],d["c"]);
@@ -90,6 +93,7 @@ function mosaicView(where,rows,cols,commData,min,span){
 
 	this.changeTimeSpan = function(min,span){
 		this.minTimeShown = min;
+		this.span = span;
 		this.updateColor();
 	}
 
@@ -119,6 +123,21 @@ function mosaicView(where,rows,cols,commData,min,span){
 		}
 
 		return colorScale[maxInd];
+	}
+
+	this.changeLensSize = function(num) {
+		if (num>0){
+			d3.select(ZOOM_ID).style("visibility","hidden");
+
+			this.lensSize = num;
+			this.lensRect.attr("width", this.lensSize * cellSize)
+						 .attr("height", this.lensSize * cellSize);
+		}
+	}
+
+	this.changeLensDivSize = function(num){
+
+		d3.select(ZOOM_ID).style("width",num +"%").style("height",num +"%");
 	}
 
 	this.updateColor();
