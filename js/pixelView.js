@@ -1,5 +1,5 @@
 function pixelView(where, commData, pixel, minTime, span){
-	var container = d3.select(where);
+	var container = where;
 	var that=this;
 
 	var w =100;
@@ -18,7 +18,7 @@ function pixelView(where, commData, pixel, minTime, span){
 
 	var data =[];
 	for (var i= 0; i<span;i++){
-		data.push(commData[minTime+i][pixel]);
+		data.push(commData[minTime+i][pixel][0]);
 	}
 
 	var squareL = w/l;

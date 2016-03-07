@@ -1,5 +1,5 @@
 function zoomView(where, commData, pixels , minTime, span){
-	var allContainer = d3.select(where).style("visibility","visible");
+	var allContainer = where.style("visibility","visible");
 	var that=this;
 
 	allContainer.selectAll("*").remove();
@@ -12,13 +12,13 @@ function zoomView(where, commData, pixels , minTime, span){
 	var squareLPct = (100-l) / l;
 	
 	for (var i= 0; i<pixels.length;i++){
-		container.append("div").attr("id","zoomBoxId"+i)
+		var zoomBox = container.append("div")
 				.attr("class","zoomSquareDiv")
 				.style("top", (Math.floor(i/l) * (squareLPct + 1) ) + "%")
 				.style("left", (Math.floor(i % l) * (squareLPct + 1) ) + "%")
 				.style("width", (squareLPct) + "%")
 				.style("height", (squareLPct) + "%")
-		var zoom = new pixelView("#zoomBoxId"+i,commData, pixels[i] ,minTime,span);
+		var zoom = new pixelView(zoomBox,commData, pixels[i] ,minTime,span);
 
 	}
 

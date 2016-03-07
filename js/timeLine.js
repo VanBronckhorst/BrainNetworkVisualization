@@ -1,4 +1,4 @@
-function timelineView(where,data){
+function timelineView(where,data,data2){
 
 
 	var container = d3.select(where);
@@ -15,9 +15,10 @@ function timelineView(where,data){
 	this.span = 10;
 	this.onChangeFunc = function(){};
 
-	var svg = container.append("svg").attr("class","mosaicSvg")
+	this.svg = container.append("svg").attr("class","mosaicSvg")
 									.attr("preserveAspectRatio","none")
 									.attr("viewBox","0 0 " + (w)+ " " + (h));
+	var svg = this.svg;
 
 	var LEFT=1;
 	var RIGHT = 2;
@@ -58,21 +59,26 @@ function timelineView(where,data){
 
 
 	// Set the ranges
-	var x = d3.scale.linear().range([0, w]);
-	var y = d3.scale.linear().range([h, 0]);
+	this.x = d3.scale.linear().range([0, w]);
+	var x = this.x;
+	this.y = d3.scale.linear().range([h, 0]);
+	var y = this.y;
 
 	// Define the axes
-	var xAxis = d3.svg.axis().scale(x)
+	this.xAxis = d3.svg.axis().scale(x)
 	    .orient("bottom").ticks(5);
+	var xAxis = this.xAxis
 
-	var yAxis = d3.svg.axis().scale(y)
+	this.yAxis = d3.svg.axis().scale(y)
 	    .orient("left").ticks(5);
+	var yAxis = this.yAxis
 
 	// Define the line
-	var valueline = d3.svg.line()
+	this.valueline = d3.svg.line()
 	    .x(function(d,i) { return x(i); })
-	    .y(function(d,i) { return y(d); });
-	    								
+	    .y(function(d,i) { return y(d[0]); });
+	var valueline = this.valueline; 
+
 	// Scale the range of the data
 	this.numOfTimes = 0;
 
@@ -88,6 +94,10 @@ function timelineView(where,data){
     svg.append("path")
         .attr("class", "line")
         .attr("d", valueline(data));
+
+    svg.append("path")
+        .attr("class", "lineRight")
+        .attr("d", valueline(data2));
 
 
     svg.on("click",function(e){
@@ -129,6 +139,16 @@ function timelineView(where,data){
     					.attr("cy",0)
     					.attr("r",5)
     	
+    }
+
+    this.changeLeftData= function(data){
+    	this.svg.select(".line")
+    			.attr("d", this.valueline(data));
+    }
+
+    this.changeRightData= function(data){
+    	this.svg.select(".lineRight")
+    			.attr("d", this.valueline(data));
     }
 
    	this.updateTimeWindow();

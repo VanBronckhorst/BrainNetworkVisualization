@@ -12,16 +12,65 @@ body{
 	background-color: #ffffff;
 
 }
+.mosaicTopDivContainerLeft{
+	position: absolute;
+	left:0;
+	top:24%;
+	height: 5%;
+	width: 34%;
+	margin: 0 0;
+	text-align: center;
+}
 
-.mosaicDivContainer{
+.mosaicTopDivContainerRight{
+	position: absolute;
+	left:36%;
+	top:24%;
+	height: 5%;
+	width: 34%;
+	margin: 0 0;
+	text-align: center;
+}
+
+
+.mosaicDivContainerLeft{
 	position: absolute;
 	left:0;
 	top:30%;
-	height: 70%;
-	width: 70%;
+	height: 50%;
+	width: 34%;
 	margin: 0 0;
 	background-color: #cccccc;
 }
+.mosaicDivContainerRight{
+	position: absolute;
+	left:36%;
+	top:30%;
+	height: 50%;
+	width: 34%;
+	margin: 0 0;
+	background-color: #cccccc;
+}
+
+.swordDivContainerLeft{
+	position: absolute;
+	left:0;
+	top:81%;
+	height: 19%;
+	width: 34%;
+	margin: 0 0;
+	
+}
+.swordDivContainerRight{
+	position: absolute;
+	left:36%;
+	top:81%;
+	height: 19%;
+	width: 34%;
+	margin: 0 0;
+	
+}
+
 
 .timelineDivContainer{
 	position: absolute;
@@ -34,28 +83,35 @@ body{
 }
 .sliderDivContainer{
 	position: absolute;
-	left:0;
-	top:23%;
-	height: 7%;
-	width: 70%;
+	left:70%;
+	top:0%;
+	height: 20%;
+	width: 30%;
 }
 
 .lensSizeContainerDiv{
 	position: absolute;
-	left:10%;
-	top:25%;
-	height: 50%%;
-	width: 30%;
+	left:20%;
+	top: 5%;
+	height: 25%%;
+	width: 60%;
 }
 
 .zoomSizeContainerDiv{
 	position: absolute;
-	left:60%;
-	top:25%;
-	height: 50%;
-	width: 30%;
+	left:20%;
+	top:30%;
+	height: 25%;
+	width: 60%;
 }
 
+.actionChooserContainerDiv{
+	position: absolute;
+	left:20%;
+	top:60%;
+	height: 35%;
+	width: 60%;
+}
 
 .mosaicSvg{
 	height: 100%;
@@ -64,6 +120,13 @@ body{
 
 .line{
     stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+
+}
+
+.lineRight{
+    stroke: #cc0000;
     stroke-width: 2;
     fill: none;
 

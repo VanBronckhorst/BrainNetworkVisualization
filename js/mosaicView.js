@@ -1,34 +1,29 @@
-function mosaicView(where,rows,cols,commData,min,span){
+function mosaicView(where,rows,cols,commData,min,span,swordID){
 	var container = d3.select(where);
+	container.selectAll("*").remove();
+
 	var r = rows;
 	var c = cols;
 	var that = this;
-	var ZOOM_ID = "#zoomDivContainer";
+
+
+	// var ZOOM_ID = "#zoomDivContainer";
+	var SWORD_ID = swordID;
 
 	this.cols = c;
 	this.rows = rows;
 	this.commData = commData;
 	this.minTimeShown = min;
 	this.span = span;
-
+	this.action = "zoom"//"zoom";
 
 	var cellSize = 10;
-
-	// this.colorScale = [	"#cccccc",
-	// 					"#a6cee3",
-	// 					"#1f78b4",
-	// 					"#b2df8a",
-	// 					"#33a02c",
-	// 					"#fb9a99",
-	// 					"#e31a1c",
-	// 					"#fdbf6f",
-	// 					"#ff7f00",
-	// 					"#cab2d6",
-	// 					"#6a3d9a"]//d3.scale.category20();
 
 	var svg = container.append("svg").attr("class","mosaicSvg")
 									.attr("preserveAspectRatio","none")
 									.attr("viewBox","0 0 " + c * cellSize + " " + r * cellSize);
+
+	this.zoomDiv = container.append("div").attr("class","zoomDivContainer");
 
 	var data = [];
 	for (var i = 0; i < r; i++){
@@ -54,21 +49,25 @@ function mosaicView(where,rows,cols,commData,min,span){
 											
 
 	this.lensRect = svg.append("rect").attr("class","lens")
-									.attr("width", this.lensSize * cellSize)
-									.attr("height", this.lensSize * cellSize)
+									.attr("width", (this.action=="sword"? 1:this.lensSize) * cellSize)
+									.attr("height", (this.action=="sword"? 1:this.lensSize) * cellSize)
 									.style("fill","transparent")
 									.style("stroke","#000000")
 									.style("stroke-width", Math.floor(cellSize / 3))
 									.on("mouseup",function(d){
-										var pixels = [];	
+										if (that.action == "zoom"){
+											var pixels = [];	
 
-										for (var i=0;i<that.lensSize;i++){
-											for (var j=0;j<that.lensSize;j++){
-												pixels.push( (d["r"] + i)* that.cols + d["c"] + j);
+											for (var i=0;i<that.lensSize;i++){
+												for (var j=0;j<that.lensSize;j++){
+													pixels.push( (d["r"] + i)* that.cols + d["c"] + j);
+												}
 											}
-										}
 
-										that.zoom = new zoomView("#zoomDivContainer",that.commData,pixels,that.minTimeShown,that.span);
+											that.zoom = new zoomView(that.zoomDiv,that.commData,pixels,that.minTimeShown,that.span);
+										} else{
+											that.sword = new swordPlot(SWORD_ID,that.commData,(d["r"])* that.cols + d["c"] );
+										}
 									});
 
 
@@ -84,7 +83,7 @@ function mosaicView(where,rows,cols,commData,min,span){
 											});
 
 	this.updateColor = function(){
-		d3.select(ZOOM_ID).style("visibility","hidden");
+		this.zoomDiv.style("visibility","hidden");
 		svg.selectAll(".tile").attr("fill",function(d,i){
 
 												return that.mostCommon(d["r"],d["c"]);
@@ -97,6 +96,14 @@ function mosaicView(where,rows,cols,commData,min,span){
 		this.updateColor();
 	}
 
+	this.changeAction = function(action){
+		this.zoomDiv.style("visibility","hidden");
+		this.action = action;
+		this.lensRect.attr("width", (this.action=="sword"? 1:this.lensSize) * cellSize)
+					 .attr("height", (this.action=="sword"? 1:this.lensSize) * cellSize);
+
+	}
+
 	this.mostCommon = function(r,c) {
 
 		colors = {};
@@ -105,7 +112,7 @@ function mosaicView(where,rows,cols,commData,min,span){
 		}
 
 		for (var i = this.minTimeShown; i< this.minTimeShown + this.span; i++){
-			colors[colorScale[this.commData[i][r* this.cols + c]]] +=1
+			colors[colorScale[this.commData[i][r* this.cols + c][0]]] +=1
 		}
 
 
@@ -127,17 +134,17 @@ function mosaicView(where,rows,cols,commData,min,span){
 
 	this.changeLensSize = function(num) {
 		if (num>0){
-			d3.select(ZOOM_ID).style("visibility","hidden");
+			this.zoomDiv.style("visibility","hidden");
 
 			this.lensSize = num;
-			this.lensRect.attr("width", this.lensSize * cellSize)
-						 .attr("height", this.lensSize * cellSize);
+			this.lensRect.attr("width", (this.action=="sword"? 1:this.lensSize) * cellSize)
+						 .attr("height", (this.action=="sword"? 1:this.lensSize) * cellSize);
 		}
 	}
 
 	this.changeLensDivSize = function(num){
 
-		d3.select(ZOOM_ID).style("width",num +"%").style("height",num +"%");
+		this.zoomDiv.style("width",num +"%").style("height",num +"%");
 	}
 
 	this.updateColor();

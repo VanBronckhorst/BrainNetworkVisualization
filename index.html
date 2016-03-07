@@ -6,9 +6,10 @@
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<link rel="stylesheet"  type="text/css" href="css/brainHome.css">
 	<link rel="stylesheet"  type="text/css" href="css/d3.slider.css">
-	<script type="text/javascript" src="data/colorByTimestamp.json"></script>
-	<script type="text/javascript" src="data/sizebyTimestamp.json"></script>
+	
+	<script type="text/javascript" src="js/dataParser.js"></script>
 
+	<script type="text/javascript" src="js/swordPlot.js"></script>
 	<script type="text/javascript" src="js/pixelView.js"></script>
 	<script type="text/javascript" src="js/zoomView.js"></script>
 
@@ -24,23 +25,42 @@
 		<div id="chooserDivContainer" class = "chooserDivContainer"> </div>
 		<div id="timelineDivContainer" class="timelineDivContainer"></div>	
 		<div id="sliderDivContainer" class="sliderDivContainer">
-		
+
 			<div id="lensSizeContainerDiv" class="lensSizeContainerDiv">
 				<div id="lensSizeDiv" class="lensSizeDiv"></div>
 			</div>
+			
 
 			<div id="zoomSizeContainerDiv" class="zoomSizeContainerDiv">
 				<div id="zoomSizeDiv" class="zoomSizeDiv"></div>
 			</div>
 
+			<div id="actionChooserContainerDiv" class="actionChooserContainerDiv">
+				<form>
+			 	 	<input type="radio" name="gender" value="zoom" checked onclick="changeAction(this.value)" > Zoom<br>
+			  		<input type="radio" name="gender" value="sword" onclick="changeAction(this.value)"> Sword<br>
+				</form>
+			</div>
 
 		</div>
-		<div id="mosaicDivContainer" class="mosaicDivContainer">
-			<div id="zoomDivContainer" class="zoomDivContainer">
-				
-			</div>
-		</div>	
 
+		<div id="mosaicTopDivContainerLeft" class="mosaicTopDivContainerLeft">
+			<select id="dataOptionListLeft" name="dataLeft" onchange="changeLeftMosaicData()">
+				 <option value="Young40"> Young40</option>
+				 <option value="Old38"> Old38</option>
+			</select>
+		</div>	
+		<div id="mosaicDivContainerLeft" class="mosaicDivContainerLeft"></div>	
+		<div id="swordDivContainerLeft" class="swordDivContainerLeft"></div>
+
+		<div id="mosaicTopDivContainerRight" class="mosaicTopDivContainerRight">
+			<select id="dataOptionListRight" name="dataRight" onchange="changeRightMosaicData()">
+				 <option value="Young40"> Young40</option>
+				 <option value="Old38" selected="selected"> Old38</option>
+			</select>
+		</div>	
+		<div id="mosaicDivContainerRight" class="mosaicDivContainerRight"></div>	
+		<div id="swordDivContainerRight" class="swordDivContainerRight"></div>
 	</div>
 </body>
 </html>

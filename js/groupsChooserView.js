@@ -34,7 +34,6 @@ function groupsChooserView(where){
 	var len = activeColorScale.length;
 	
 	var svg = container.append("svg").attr("class","mosaicSvg")
-									.attr("preserveAspectRatio","none")
 									.attr("viewBox","0 0 " + (w + padding * (2 + len))+ " " + (h + padding * 2));
 	this.onClickFun = function(){};
 	
