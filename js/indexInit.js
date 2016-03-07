@@ -3,28 +3,23 @@ var chooser;
 var mosaic;
 var mosaicRight;
 
-function initWithData(data,dataRight,sizeData,sizeDataRight){
+
+function initWithData(data,dataRight,sizeData,sizeDataRight,network,networkRight){
 
 	var r = 130;
 	var c = 172;
-	console.log(window);
 
 	var sword = new swordPlot("#swordDivContainerLeft",data,1);
 	var swordRight = new swordPlot("#swordDivContainerRight",dataRight,1);
-	
 
-	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data,0,10,"#swordDivContainerLeft");
-	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,dataRight,0,10,"#swordDivContainerRight");
-
+	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data,0,10,"#swordDivContainerLeft","#starPlotDivContainerLeft",network);
+	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,dataRight,0,10,"#swordDivContainerRight","#starPlotDivContainerRight",networkRight);
 
 	chooser = new groupsChooserView("#chooserDivContainer");
 	chooser.onClick(function(){
 		mosaic.updateColor();
 		mosaicRight.updateColor();
 	})
-
-
-	
 
 
 	timeLine = new timelineView("#timelineDivContainer",sizeData,sizeDataRight);
@@ -52,31 +47,35 @@ function initWithData(data,dataRight,sizeData,sizeDataRight){
 						      	mosaicRight.changeLensDivSize(value);
 						    })
     );
+
+
+    
 }
 
 
 function init(){
-	parseFromFile("data/Young40_a1/dataCompressed.json","data/Old38_a1/dataCompressed.json",initWithData);
+	parseFromFile("data/Young40_a1/dataCompressed.json","data/Old38_a1/dataCompressed.json",
+				  "data/Young40_a1/Young40a1_network_metrics.csv","data/Old38_a1/Old38a1_network_metrics.csv",initWithData);
 }
 
 
-function changeLeftData(data,sizeData){
+function changeLeftData(data,sizeData,netData){
 
 	var r = 130;
 	var c = 172;
 
-	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data ,timeLine.minTime ,timeLine.span ,"#swordDivContainerLeft");
+	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data ,timeLine.minTime ,timeLine.span ,"#swordDivContainerLeft","#starPlotDivContainerLeft",netData);
 	
 	timeLine.changeLeftData(sizeData);
 
 }
 
-function changeRightData(data,sizeData){
+function changeRightData(data,sizeData,netData){
 
 	var r = 130;
 	var c = 172;
 
-	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,data ,timeLine.minTime ,timeLine.span ,"#swordDivContainerRight");
+	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,data ,timeLine.minTime ,timeLine.span ,"#swordDivContainerRight","#starPlotDivContainerRight",netData);
 	timeLine.changeRightData(sizeData);
 
 }
@@ -86,16 +85,16 @@ function changeLeftMosaicData(){
 	var i = x.selectedIndex;
 	var value = x.options[i].value;
 	var url = "data/" + value + "_a1/dataCompressed.json";
-
-	parseFromSingleFile(url,changeLeftData);
+	var netUrl = "data/" + value + "_a1/"+value+"a1_network_metrics.csv";
+	parseFromSingleFile(url,netUrl,changeLeftData);
 }
 function changeRightMosaicData(){
 	var x = document.getElementById("dataOptionListRight");
 	var i = x.selectedIndex;
 	var value = x.options[i].value;
 	var url = "data/" + value + "_a1/dataCompressed.json";
-
-	parseFromSingleFile(url,changeRightData);
+	var netUrl = "data/" + value + "_a1/"+value+"a1_network_metrics.csv";
+	parseFromSingleFile(url,netUrl,changeRightData);
 }
 
 function changeAction(act) {

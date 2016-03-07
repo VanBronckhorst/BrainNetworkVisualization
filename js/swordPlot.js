@@ -68,7 +68,7 @@ function swordPlot(where,data,pixel){
 								return colorScale[d];
 							})
 
-	svg.selectAll(".lowerBar").data(upperColor).enter().append("rect")
+	svg.selectAll(".lowerBar").data(lowerColor).enter().append("rect")
 							.attr("class","lowerBar")
 							.attr("x",function(d,i){
 								return x(i);

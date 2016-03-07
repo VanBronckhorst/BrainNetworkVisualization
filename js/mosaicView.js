@@ -1,4 +1,4 @@
-function mosaicView(where,rows,cols,commData,min,span,swordID){
+function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 	var container = d3.select(where);
 	container.selectAll("*").remove();
 
@@ -67,6 +67,7 @@ function mosaicView(where,rows,cols,commData,min,span,swordID){
 											that.zoom = new zoomView(that.zoomDiv,that.commData,pixels,that.minTimeShown,that.span);
 										} else{
 											that.sword = new swordPlot(SWORD_ID,that.commData,(d["r"])* that.cols + d["c"] );
+											that.star = new starPlot(starID,netData,(d["r"])* that.cols + d["c"] );
 										}
 									});
 
