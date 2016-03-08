@@ -48,7 +48,8 @@ function initWithData(data,dataRight,sizeData,sizeDataRight,network,networkRight
 						    })
     );
 
-
+    var overallLeft = new overallStarPlot("#overallStarPlotDivContainerLeft",network);
+    var overallRight = new overallStarPlot("#overallStarPlotDivContainerRight",networkRight);
     
 }
 
@@ -67,7 +68,7 @@ function changeLeftData(data,sizeData,netData){
 	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data ,timeLine.minTime ,timeLine.span ,"#swordDivContainerLeft","#starPlotDivContainerLeft",netData);
 	
 	timeLine.changeLeftData(sizeData);
-
+	var overall = new overallStarPlot("#overallStarPlotDivContainerLeft",netData);
 }
 
 function changeRightData(data,sizeData,netData){
@@ -77,6 +78,8 @@ function changeRightData(data,sizeData,netData){
 
 	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,data ,timeLine.minTime ,timeLine.span ,"#swordDivContainerRight","#starPlotDivContainerRight",netData);
 	timeLine.changeRightData(sizeData);
+	var overall = new overallStarPlot("#overallStarPlotDivContainerRight",netData);
+
 
 }
 
