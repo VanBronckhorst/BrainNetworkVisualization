@@ -10,7 +10,7 @@ function starPlot(where,data, pixel){
 
 	container.selectAll("*").remove();
 	var svg = container.append("svg").attr("class","mosaicSvg")
-									.attr("preserveAspectRatio","none")
+									//.attr("preserveAspectRatio","none")
 									.attr("viewBox",(-w/2)+" "+ (-h/2) +" " + (w)+ " " + (h));
 
 
@@ -48,15 +48,15 @@ function overallStarPlot(where,data){
 	var container = d3.select(where);
 	var that=this;
 
-	var w =200;
-	var h=200;
+	var w =1000;
+	var h=1000;
 	this.svgW = w;
 	this.svgH = h;
 
 
 	container.selectAll("*").remove();
 	var svg = container.append("svg").attr("class","mosaicSvg")
-									.attr("preserveAspectRatio","none")
+									//.attr("preserveAspectRatio","none")
 									.attr("viewBox",(-w/2)+" "+ (-h/2) +" " + (w)+ " " + (h));
 
 

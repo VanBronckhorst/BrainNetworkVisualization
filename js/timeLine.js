@@ -1,4 +1,4 @@
-function timelineView(where,data,data2){
+function timelineView(where,data){
 
 
 	var container = d3.select(where);
@@ -95,9 +95,9 @@ function timelineView(where,data,data2){
         .attr("class", "line")
         .attr("d", valueline(data));
 
-    svg.append("path")
-        .attr("class", "lineRight")
-        .attr("d", valueline(data2));
+    // svg.append("path")
+    //     .attr("class", "lineRight")
+    //     .attr("d", valueline(data2));
 
 
     svg.on("click",function(e){
@@ -125,6 +125,13 @@ function timelineView(where,data,data2){
     	this.onChangeFunc = fun;
     }
 
+    this.changeTime = function(min,span){
+    	this.minTime = min;
+    	this.span = span; 
+    	this.updateTimeWindow();
+    	//this.onChangeFunc(this.minTime,this.span); // Causes loop
+    }
+
     this.updateTimeWindow = function(){
     	this.timeWindow.attr("x",this.minTime * (this.svgW / this.numOfTimes))
     					.attr("y",0)
@@ -141,15 +148,27 @@ function timelineView(where,data,data2){
     	
     }
 
-    this.changeLeftData= function(data){
+    this.changeData= function(data){
+    	this.minTime = 0;
+    	this.span = 10;
+    	this.numOfTimes = 0;
+
+		for (var i in data){
+			this.numOfTimes +=1;
+		}
+
+
+	    x.domain([0,this.numOfTimes]);
+	    y.domain([0, 172*130]);
+    	this.updateTimeWindow();
     	this.svg.select(".line")
     			.attr("d", this.valueline(data));
     }
 
-    this.changeRightData= function(data){
-    	this.svg.select(".lineRight")
-    			.attr("d", this.valueline(data));
-    }
+    // this.changeRightData= function(data){
+    // 	this.svg.select(".lineRight")
+    // 			.attr("d", this.valueline(data));
+    // }
 
    	this.updateTimeWindow();
 

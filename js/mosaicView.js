@@ -6,6 +6,7 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 	var c = cols;
 	var that = this;
 
+	console.log(commData);
 
 	// var ZOOM_ID = "#zoomDivContainer";
 	var SWORD_ID = swordID;
@@ -45,8 +46,9 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 											.attr("y",function(d){
 												return d["r"] * cellSize;
 											});
-											
-											
+	
+
+	this.onKNNFun = function(){};						
 
 	this.lensRect = svg.append("rect").attr("class","lens")
 									.attr("width", (this.action=="sword"? 1:this.lensSize) * cellSize)
@@ -64,11 +66,27 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 												}
 											}
 
+											
+											
+
+
 											that.zoom = new zoomView(that.zoomDiv,that.commData,pixels,that.minTimeShown,that.span);
-										} else{
+										} else if (that.action=="sword"){
 											that.sword = new swordPlot(SWORD_ID,that.commData,(d["r"])* that.cols + d["c"] );
 											that.star = new starPlot(starID,netData,(d["r"])* that.cols + d["c"] );
+										} else if (that.action == "KNN"){
+											that.onKNNFun(that.commData,(d["r"]* that.cols + d["c"] ));
 										}
+
+										svg.selectAll(".selectedLens").remove();
+										svg.append("rect").attr("class","selectedLens")
+															.attr("x", d.c * cellSize)
+															  .attr("y", d.r * cellSize)
+															  .attr("width", (that.action=="sword"? 1:that.lensSize) * cellSize)
+															  .attr("height", (that.action=="sword"? 1:that.lensSize) * cellSize)
+															  .style("fill","transparent")
+															.style("stroke","#FF0000")
+															.style("stroke-width", Math.floor(cellSize / 2))
 									});
 
 
@@ -95,6 +113,10 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 		this.minTimeShown = min;
 		this.span = span;
 		this.updateColor();
+	}
+
+	this.onKNN = function (fun){
+		this.onKNNFun = fun;
 	}
 
 	this.changeAction = function(action){

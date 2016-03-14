@@ -1,9 +1,9 @@
 
-f = open('../data/Old38_a1/Old38a1_top10communities_f180_gColor.txt', 'rw')
-f2 = open('../data/Old38_a1/Old38a1_top10communities_f180_iColor.txt', 'rw')
-degree = open('../data/Old38_a1/Old38a1_nodeDegree_f180.txt', 'rw')
-size = open('../data/Old38_a1/Old38a1_top10communities_f180_gSize.txt', 'rw')
-size2 = open('../data/Old38_a1/Old38a1_top10communities_f180_iSize.txt', 'rw')
+f = open('../data/Old38_a3/gColorTop10_f100.txt', 'rw')
+f2 = open('../data/Old38_a3/iColorTop10_f100.txt', 'rw')
+degree = open('../data/Old38_a3/nodeDegree_f100.txt', 'rw')
+size = open('../data/Old38_a3/gSizeTop10_f100.txt', 'rw')
+size2 = open('../data/Old38_a3/iSizeTop10_f100.txt', 'rw')
 
 res ={}
 res["rows"] = 130
@@ -64,5 +64,5 @@ for line in size2:
 
 import json
 
-f2 = open('../data/Old38_a1/dataCompressed.json', 'w+')
+f2 = open('../data/Old38_a3/dataCompressed.json', 'w+')
 json.dump(res,f2, sort_keys=True,indent=4, separators=(',', ': '))

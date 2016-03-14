@@ -15,6 +15,7 @@
 
 	<script type="text/javascript" src="js/groupsChooserView.js"></script>
 	<script type="text/javascript" src="js/mosaicView.js"></script>
+	<script type="text/javascript" src="js/neighborsPlot.js"></script>
 	<script type="text/javascript" src="js/timeLine.js"></script>
 	<script type="text/javascript" src="js/d3.slider.js"></script>
 	<script type="text/javascript" src="js/starPlot.js"></script>
@@ -23,41 +24,58 @@
 </head>
 <body onload="init()">
 	<div class="mainContainer">
-		<div id="chooserDivContainer" class = "chooserDivContainer"> </div>
-		<div id="timelineDivContainer" class="timelineDivContainer"></div>	
-		<div id="sliderDivContainer" class="sliderDivContainer">
+		
+		<div id="leftTimelineDivContainer" class="leftTimelineDivContainer"></div>	
+		<div id="rightTimelineDivContainer" class="rightTimelineDivContainer"></div>	
+		
+		<div id="toolBoxDiv" class="toolBoxDiv">
+			<div id="sliderDivContainer" class="sliderDivContainer">
 
-			<div id="lensSizeContainerDiv" class="lensSizeContainerDiv">
-				<div id="lensSizeDiv" class="lensSizeDiv"></div>
+				<div id="lensSizeLabelDiv" class="lensSizeLabelDiv">Lens Size: </div>
+				<div id="lensSizeContainerDiv" class="lensSizeContainerDiv">
+					<div id="lensSizeDiv" class="lensSizeDiv"></div>
+				</div>
+				
+				<div id="zoomSizeLabelDiv" class="zoomSizeLabelDiv">Zoom Size: </div>
+				<div id="zoomSizeContainerDiv" class="zoomSizeContainerDiv">
+					<div id="zoomSizeDiv" class="zoomSizeDiv"></div>
+				</div>
+
 			</div>
-			
-
-			<div id="zoomSizeContainerDiv" class="zoomSizeContainerDiv">
-				<div id="zoomSizeDiv" class="zoomSizeDiv"></div>
-			</div>
-
 			<div id="actionChooserContainerDiv" class="actionChooserContainerDiv">
-				<form>
-			 	 	<input type="radio" name="gender" value="zoom" checked onclick="changeAction(this.value)" > Zoom<br>
-			  		<input type="radio" name="gender" value="sword" onclick="changeAction(this.value)"> Sword<br>
-				</form>
+					<form>
+				 	 	<input type="radio" name="gender" value="zoom" checked onclick="changeAction(this.value)" > Zoom<br>
+				  		<input type="radio" name="gender" value="sword" onclick="changeAction(this.value)"> Sword<br>
+				  		<input type="radio" name="gender" value="KNN" onclick="changeAction(this.value)"> KNN<br>
+					</form>
 			</div>
-
+			<div id="chooserDivContainer" class = "chooserDivContainer"> </div>
 		</div>
 
 		<div id="mosaicTopDivContainerLeft" class="mosaicTopDivContainerLeft">
 			<select id="dataOptionListLeft" name="dataLeft" onchange="changeLeftMosaicData()">
-				 <option value="Young40"> Young40</option>
-				 <option value="Old38"> Old38</option>
+				 <option value="Young40_a1"> Young40_a1</option>
+				 <option value="Old38_a1"> Old38_a1</option>
+				 <option value="Old38_a2"> Old38_a2</option>
+				 <option value="Old38_a3"> Old38_a3</option>
 			</select>
 		</div>	
 		<div id="mosaicDivContainerLeft" class="mosaicDivContainerLeft"></div>	
 		<div id="swordDivContainerLeft" class="swordDivContainerLeft"></div>
 
+
+		<div id="mosaicTopDivContainerCenter" class="mosaicTopDivContainerCenter">
+			<form>
+				<input type="checkbox" checked onclick="changeTimeChain(this.checked)" > Sync Timelines<br>
+			</form>
+		</div>
+
 		<div id="mosaicTopDivContainerRight" class="mosaicTopDivContainerRight">
 			<select id="dataOptionListRight" name="dataRight" onchange="changeRightMosaicData()">
-				 <option value="Young40"> Young40</option>
-				 <option value="Old38" selected="selected"> Old38</option>
+				  <option value="Young40_a1"> Young40_a1</option>
+				 <option value="Old38_a1" selected="selected"> Old38_a1</option>
+				 <option value="Old38_a2"> Old38_a2</option>
+				 <option value="Old38_a3"> Old38_a3</option>
 			</select>
 		</div>	
 		<div id="mosaicDivContainerRight" class="mosaicDivContainerRight"></div>	
@@ -67,6 +85,8 @@
 
 		<div id="overallStarPlotDivContainerLeft" class="overallStarPlotDivContainerLeft"></div>	
 		<div id="overallStarPlotDivContainerRight" class="overallStarPlotDivContainerRight"></div>	
+
+		<div id = "knnDivContainer" class="knnDivContainer"> </div>
 	</div>
 </body>
 </html>
