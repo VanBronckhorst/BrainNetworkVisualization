@@ -6,6 +6,7 @@
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<link rel="stylesheet"  type="text/css" href="css/brainHome.css">
 	<link rel="stylesheet"  type="text/css" href="css/d3.slider.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	
 	<script type="text/javascript" src="js/dataParser.js"></script>
 
@@ -42,6 +43,22 @@
 				</div>
 
 			</div>
+
+			<div id="knnOptionsDivContainer" class="sliderDivContainer" style="visibility: hidden">
+
+				<div id="proximityLabelDiv" class="lensSizeLabelDiv">Proximity: </div>
+				<div id="proximityContainerDiv" class="lensSizeContainerDiv">
+					<div id="proximityDiv" class="lensSizeDiv"></div>
+				</div>
+				
+				<div id="knnNumLabelDiv" class="zoomSizeLabelDiv">Number: </div>
+				<div id="knnNumContainerDiv" class="zoomSizeContainerDiv">
+					<div id="knnNumDiv" class="zoomSizeDiv"></div>
+				</div>
+
+			</div>
+
+
 			<div id="actionChooserContainerDiv" class="actionChooserContainerDiv">
 					<form>
 				 	 	<input type="radio" name="gender" value="zoom" checked onclick="changeAction(this.value)" > Zoom<br>
@@ -66,7 +83,8 @@
 
 		<div id="mosaicTopDivContainerCenter" class="mosaicTopDivContainerCenter">
 			<form>
-				<input type="checkbox" checked onclick="changeTimeChain(this.checked)" > Sync Timelines<br>
+				<input type="checkbox" checked onclick="changeTimeChain(this.checked)" > Sync Timelines</input>
+				<input type="checkbox" checked onclick="changeZoomChain(this.checked)" > Sync Zoom</input>
 			</form>
 		</div>
 
@@ -87,6 +105,11 @@
 		<div id="overallStarPlotDivContainerRight" class="overallStarPlotDivContainerRight"></div>	
 
 		<div id = "knnDivContainer" class="knnDivContainer"> </div>
+	</div>
+
+
+	<div class="loadingDiv">
+		<div class="loadingSpinnerDiv"> <i class="fa fa-3x fa-spinner fa-spin"></i></div>	
 	</div>
 </body>
 </html>

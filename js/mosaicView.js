@@ -1,4 +1,4 @@
-function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
+function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData,grayData){
 	var container = d3.select(where);
 	container.selectAll("*").remove();
 
@@ -6,7 +6,6 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 	var c = cols;
 	var that = this;
 
-	console.log(commData);
 
 	// var ZOOM_ID = "#zoomDivContainer";
 	var SWORD_ID = swordID;
@@ -51,8 +50,8 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 	this.onKNNFun = function(){};						
 
 	this.lensRect = svg.append("rect").attr("class","lens")
-									.attr("width", (this.action=="sword"? 1:this.lensSize) * cellSize)
-									.attr("height", (this.action=="sword"? 1:this.lensSize) * cellSize)
+									.attr("width", (this.action=="zoom"? this.lensSize : 1) * cellSize)
+									.attr("height", (this.action=="zoom"? this.lensSize :1) * cellSize)
 									.style("fill","transparent")
 									.style("stroke","#000000")
 									.style("stroke-width", Math.floor(cellSize / 3))
@@ -71,19 +70,20 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 
 
 											that.zoom = new zoomView(that.zoomDiv,that.commData,pixels,that.minTimeShown,that.span);
+											that.onZoomFun(pixels , d);
 										} else if (that.action=="sword"){
-											that.sword = new swordPlot(SWORD_ID,that.commData,(d["r"])* that.cols + d["c"] );
+											that.sword = new swordPlot(SWORD_ID,that.commData,(d["r"])* that.cols + d["c"],grayData );
 											that.star = new starPlot(starID,netData,(d["r"])* that.cols + d["c"] );
 										} else if (that.action == "KNN"){
-											that.onKNNFun(that.commData,(d["r"]* that.cols + d["c"] ));
+											that.onKNNFun(that.commData,(d["r"]* that.cols + d["c"] ),that.minTimeShown,that.span);
 										}
 
 										svg.selectAll(".selectedLens").remove();
 										svg.append("rect").attr("class","selectedLens")
 															.attr("x", d.c * cellSize)
 															  .attr("y", d.r * cellSize)
-															  .attr("width", (that.action=="sword"? 1:that.lensSize) * cellSize)
-															  .attr("height", (that.action=="sword"? 1:that.lensSize) * cellSize)
+															  .attr("width", (that.action=="zoom"? that.lensSize : 1) * cellSize)
+															  .attr("height", (that.action=="zoom"? that.lensSize : 1) * cellSize)
 															  .style("fill","transparent")
 															.style("stroke","#FF0000")
 															.style("stroke-width", Math.floor(cellSize / 2))
@@ -100,6 +100,24 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 													.datum({"r":r, "c":c});
 												
 											});
+
+	this.onZoom = function(fun){
+		this.onZoomFun = fun;
+	}
+
+	this.zoomHere = function(pixels,d){
+		this.zoom = new zoomView(that.zoomDiv,that.commData,pixels,that.minTimeShown,that.span);
+		svg.selectAll(".selectedLens").remove();
+		svg.append("rect").attr("class","selectedLens")
+							.attr("x", d.c * cellSize)
+							  .attr("y", d.r * cellSize)
+							  .attr("width", (that.action=="zoom"? that.lensSize : 1) * cellSize)
+							  .attr("height", (that.action=="zoom"? that.lensSize : 1) * cellSize)
+							  .style("fill","transparent")
+							.style("stroke","#FF0000")
+							.style("stroke-width", Math.floor(cellSize / 2))
+
+	}
 
 	this.updateColor = function(){
 		this.zoomDiv.style("visibility","hidden");
@@ -122,8 +140,8 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 	this.changeAction = function(action){
 		this.zoomDiv.style("visibility","hidden");
 		this.action = action;
-		this.lensRect.attr("width", (this.action=="sword"? 1:this.lensSize) * cellSize)
-					 .attr("height", (this.action=="sword"? 1:this.lensSize) * cellSize);
+		this.lensRect.attr("width", (this.action=="zoom"? this.lensSize : 1) * cellSize)
+					 .attr("height", (this.action=="zoom"? this.lensSize : 1) * cellSize);
 
 	}
 
@@ -138,7 +156,7 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 			colors[colorScale[this.commData[i][r* this.cols + c][0]]] +=1
 		}
 
-
+		colors[colorScale[0]] = 0;
 
 		var max = 0;
 		var maxInd = 0;
@@ -160,8 +178,8 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData){
 			this.zoomDiv.style("visibility","hidden");
 
 			this.lensSize = num;
-			this.lensRect.attr("width", (this.action=="sword"? 1:this.lensSize) * cellSize)
-						 .attr("height", (this.action=="sword"? 1:this.lensSize) * cellSize);
+			this.lensRect.attr("width", (this.action=="zoom"? this.lensSize : 1) * cellSize)
+						 .attr("height", (this.action=="zoom"? this.lensSize : 1) * cellSize);
 		}
 	}
 

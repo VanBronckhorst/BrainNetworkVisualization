@@ -53,15 +53,15 @@
 
 // }
 
-function parseFromFile(url,url2,netUrl,netUrl2,callback){
-	parseFromSingleFile(url,netUrl,function(d,s,n){
-		parseFromSingleFile(url2,netUrl2,function(d2,s2,n2){
-			callback(d,d2,s,s2,n,n2);
+function parseFromFile(url,url2,netUrl,netUrl2,pixUrl,pixUrl2,callback){
+	parseFromSingleFile(url,netUrl,pixUrl,function(d,s,n,p){
+		parseFromSingleFile(url2,netUrl2,pixUrl2,function(d2,s2,n2,p2){
+			callback(d,d2,s,s2,n,n2,p,p2);
 		});
 	});
 }
 
-function parseFromSingleFile(url,netUrl,callback){
+function parseFromSingleFile(url,netUrl,pixUrl,callback){
 
 
 	d3.json(url, function(error, json) {
@@ -96,7 +96,18 @@ function parseFromSingleFile(url,netUrl,callback){
 	    		n[id] = csv[i];
 	    	}
 
-	    	callback(d,s,n);
+	    	d3.text(pixUrl, function(text) {
+			  var pixData = d3.tsv.parseRows(text).map(function(row) {
+			    return row.map(function(value) {
+			      return +value;
+			    });
+			  });
+
+
+			  callback(d,s,n,pixData);
+			});
+
+	    	
 	    });
 		
 	});

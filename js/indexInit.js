@@ -3,17 +3,34 @@ var chooser;
 var mosaic;
 var mosaicRight;
 var timeSync = true;
+var zoomSync = true;
+var knnFun;
 
-function initWithData(data,dataRight,sizeData,sizeDataRight,network,networkRight){
+function initWithData(data,dataRight,sizeData,sizeDataRight,network,networkRight,grayData,grayData2){
 
 	var r = 130;
 	var c = 172;
 
-	var sword = new swordPlot("#swordDivContainerLeft",data,1);
-	var swordRight = new swordPlot("#swordDivContainerRight",dataRight,1);
+	var sword = new swordPlot("#swordDivContainerLeft",data,1,[]);
+	var swordRight = new swordPlot("#swordDivContainerRight",dataRight,1,[]);
 
-	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data,0,10,"#swordDivContainerLeft","#starPlotDivContainerLeft",network);
-	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,dataRight,0,10,"#swordDivContainerRight","#starPlotDivContainerRight",networkRight);
+	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data,0,10,"#swordDivContainerLeft","#starPlotDivContainerLeft",network,grayData);
+	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,dataRight,0,10,"#swordDivContainerRight","#starPlotDivContainerRight",networkRight,grayData2);
+
+
+	mosaic.onZoom(function(pixels,d){
+		if (zoomSync){
+			mosaicRight.zoomHere(pixels,d);
+		}
+	})
+
+	mosaicRight.onZoom(function(pixels,d){
+		if (zoomSync){
+			mosaic.zoomHere(pixels,d);
+		}
+	})
+
+
 
 	chooser = new groupsChooserView("#chooserDivContainer");
 	chooser.onClick(function(){
@@ -60,49 +77,88 @@ function initWithData(data,dataRight,sizeData,sizeDataRight,network,networkRight
 						    })
     );
 
+    var knnNum = 5;
+    var proximity = 5;
+    d3.select('#knnNumDiv').call(d3.slider()
+							.min(3)
+							.max(10)
+							.value(5)
+							.on("slide", function(evt, value) {
+						      	knnNum = Math.floor(value);
+						    })
+    );
+
+    d3.select('#proximityDiv').call(d3.slider()
+							.min(3)
+							.max(20)
+							.value(5)
+							.on("slide", function(evt, value) {
+						      	proximity = Math.floor(value);
+						    })
+    );
+
     var overallLeft = new overallStarPlot("#overallStarPlotDivContainerLeft",network);
     var overallRight = new overallStarPlot("#overallStarPlotDivContainerRight",networkRight);
     
 
-    var knnFun = function(data,pixel){
+    knnFun = function(data,pixel,min,span){
     	console.log("ToKNN");
-    	var knn = new neighborsPlot("#knnDivContainer",data,pixel,5,5,0)
+    	var knn = new neighborsPlot("#knnDivContainer",data,pixel,min,span,knnNum,proximity)
     }
 
     mosaic.onKNN(knnFun);
     mosaicRight.onKNN(knnFun);
+
+    d3.select(".loadingDiv").style("visibility","hidden");
 }
 
 
 function init(){
 	parseFromFile("data/Young40_a1/dataCompressed.json","data/Old38_a1/dataCompressed.json",
-				  "data/Young40_a1/network_metrics.csv","data/Old38_a1/network_metrics.csv",initWithData);
+				  "data/Young40_a1/network_metrics.csv","data/Old38_a1/network_metrics.csv",
+				  "data/Young40_a1/pixelsGreyValue_f100.txt","data/Old38_a1/pixelsGreyValue_f100.txt",initWithData);
 }
 
 
-function changeLeftData(data,sizeData,netData){
+function changeLeftData(data,sizeData,netData,grayData){
 
 	var r = 130;
 	var c = 172;
 
 	timeLine.changeData(sizeData);
-	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data ,timeLine.minTime ,timeLine.span ,"#swordDivContainerLeft","#starPlotDivContainerLeft",netData);
+	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data ,timeLine.minTime ,timeLine.span ,"#swordDivContainerLeft","#starPlotDivContainerLeft",netData,grayData);
 	
-	
+	mosaic.onKNN(knnFun);
+	mosaic.onZoom(function(pixels,d){
+		if (zoomSync){
+			mosaicRight.zoomHere(pixels,d);
+		}
+	})
+
 	var overall = new overallStarPlot("#overallStarPlotDivContainerLeft",netData);
+
+	d3.select(".loadingDiv").style("visibility","hidden");
 }
 
-function changeRightData(data,sizeData,netData){
+function changeRightData(data,sizeData,netData,grayData){
 
 	var r = 130;
 	var c = 172;
 
-	rightTimeLine.changeData(sizeData);
-	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,data ,rightTimeLine.minTime ,rightTimeLine.span ,"#swordDivContainerRight","#starPlotDivContainerRight",netData);
+	timeLineRight.changeData(sizeData);
+	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,data ,timeLineRight.minTime ,timeLineRight.span ,"#swordDivContainerRight","#starPlotDivContainerRight",netData,grayData);
 	
+
+    mosaicRight.onKNN(knnFun);
+    mosaicRight.onZoom(function(pixels,d){
+		if (zoomSync){
+			mosaic.zoomHere(pixels,d);
+		}
+	})
+
 	var overall = new overallStarPlot("#overallStarPlotDivContainerRight",netData);
 
-
+	d3.select(".loadingDiv").style("visibility","hidden");
 }
 
 function changeLeftMosaicData(){
@@ -111,22 +167,37 @@ function changeLeftMosaicData(){
 	var value = x.options[i].value;
 	var url = "data/" + value + "/dataCompressed.json";
 	var netUrl = "data/" + value + "/network_metrics.csv";
-	parseFromSingleFile(url,netUrl,changeLeftData);
+	var pixUrl = "data/" + value + "/pixelsGreyValue_f100.txt";
+
+	d3.select(".loadingDiv").style("visibility","visible");
+
+	parseFromSingleFile(url,netUrl,pixUrl,changeLeftData);
 }
+
 function changeRightMosaicData(){
 	var x = document.getElementById("dataOptionListRight");
 	var i = x.selectedIndex;
 	var value = x.options[i].value;
 	var url = "data/" + value + "/dataCompressed.json";
 	var netUrl = "data/" + value + "/network_metrics.csv";
-	parseFromSingleFile(url,netUrl,changeRightData);
+	var pixUrl = "data/" + value + "/pixelsGreyValue_f100.txt";
+
+	d3.select(".loadingDiv").style("visibility","visible");
+
+	parseFromSingleFile(url,netUrl,pixUrl,changeRightData);
 }
 
 function changeAction(act) {
 	mosaic.changeAction(act);
 	mosaicRight.changeAction(act);
+
+	d3.select("#sliderDivContainer").style("visibility", act == "zoom" ? "visible" : "hidden");
+	d3.select("#knnOptionsDivContainer").style("visibility", act == "KNN" ? "visible" : "hidden");
 }
 
 function changeTimeChain(val){
 	timeSync = val;
+}
+function changeZoomChain(val){
+	zoomSync = val;
 }

@@ -1,4 +1,4 @@
-function swordPlot(where,data,pixel){
+function swordPlot(where,data,pixel,grayData){
 	var container = d3.select(where);
 
 	var w = 3000;
@@ -81,6 +81,34 @@ function swordPlot(where,data,pixel){
 							.style("fill",function(d,i){
 								return colorScale[d];
 							});
+
+	
+	var maxG = 0;
+	var minG = Infinity;
+	var gray = [];
+	for (var i=0;i<grayData.length;i++){
+		gray.push(grayData[i][pixel])
+		maxG = Math.max(grayData[i][pixel],maxG);
+		minG = Math.min(grayData[i][pixel],minG);
+	}
+
+	// Set the ranges
+	this.x = d3.scale.linear().range([0, w]);
+	var x = this.x;
+	this.y = d3.scale.linear().range([singleH+sword, singleH]);
+	var y = this.y;
+	x.domain([0,grayData.length]);
+    y.domain([minG-1, maxG +1]);
+
+	// Define the line
+	var valueline = d3.svg.line()
+	    .x(function(d,i) { return x(i); })
+	    .y(function(d,i) { return y(d); });
+
+	// Add the valueline path.
+    svg.append("path")
+        .attr("class", "swordLine")
+        .attr("d", valueline(gray));
 
 
 }

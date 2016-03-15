@@ -1,9 +1,9 @@
 
-f = open('../data/Old38_a3/gColorTop10_f100.txt', 'rw')
-f2 = open('../data/Old38_a3/iColorTop10_f100.txt', 'rw')
-degree = open('../data/Old38_a3/nodeDegree_f100.txt', 'rw')
-size = open('../data/Old38_a3/gSizeTop10_f100.txt', 'rw')
-size2 = open('../data/Old38_a3/iSizeTop10_f100.txt', 'rw')
+f = open('../data/Young40_a1/gColorTop10_f100.txt', 'rw')
+f2 = open('../data/Young40_a1/iColorTop10_f100.txt', 'rw')
+degree = open('../data/Young40_a1/nodeDegree_f100.txt', 'rw')
+size = open('../data/Young40_a1/gSizeTop10_f100.txt', 'rw')
+size2 = open('../data/Young40_a1/iSizeTop10_f100.txt', 'rw')
 
 res ={}
 res["rows"] = 130
@@ -64,5 +64,5 @@ for line in size2:
 
 import json
 
-f2 = open('../data/Old38_a3/dataCompressed.json', 'w+')
+f2 = open('../data/Young40_a1/dataCompressed.json', 'w+')
 json.dump(res,f2, sort_keys=True,indent=4, separators=(',', ': '))

@@ -82,13 +82,17 @@ function timelineView(where,data){
 	// Scale the range of the data
 	this.numOfTimes = 0;
 
+
+	var maxS = 0;
+
 	for (var i in data){
 		this.numOfTimes +=1;
+		maxS = (data[i][0] > maxS )? data[i][0] : maxS;
 	}
 
 
     x.domain([0,this.numOfTimes]);
-    y.domain([0, 172*130]);
+    y.domain([0, maxS +1]);
 
     // Add the valueline path.
     svg.append("path")
@@ -133,6 +137,10 @@ function timelineView(where,data){
     }
 
     this.updateTimeWindow = function(){
+    	if (this.minTime + this.span >= this.numOfTimes){
+    		this.minTime = this.numOfTimes - this.span -1;
+    	}
+
     	this.timeWindow.attr("x",this.minTime * (this.svgW / this.numOfTimes))
     					.attr("y",0)
     					.attr("height",this.svgH)
@@ -152,14 +160,16 @@ function timelineView(where,data){
     	this.minTime = 0;
     	this.span = 10;
     	this.numOfTimes = 0;
-
+    	var maxS = 0;
 		for (var i in data){
 			this.numOfTimes +=1;
+			maxS = (data[i][0] > maxS )? data[i][0] : maxS;
+
 		}
 
 
 	    x.domain([0,this.numOfTimes]);
-	    y.domain([0, 172*130]);
+	    y.domain([0, maxS]);
     	this.updateTimeWindow();
     	this.svg.select(".line")
     			.attr("d", this.valueline(data));
