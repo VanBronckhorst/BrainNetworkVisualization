@@ -1,32 +1,32 @@
 var activeColorScale = [	"#cccccc",
-						"#a6cee3",
 						"#1f78b4",
-						"#b2df8a",
-						"#33a02c",
-						"#fb9a99",
-						"#e31a1c",
-						"#fdbf6f",
 						"#ff7f00",
-						"#cab2d6",
-						"#6a3d9a"];
+						"#33a02c",
+						"#e31a1c",
+						"#6a3d9a",
+						"#a6cee3",
+						"#fdbf6f",
+						"#b2df8a",
+						"#fb9a99",
+						"#cab2d6"];
 var colorScale = [	"#cccccc",
-						"#a6cee3",
 						"#1f78b4",
-						"#b2df8a",
-						"#33a02c",
-						"#fb9a99",
-						"#e31a1c",
-						"#fdbf6f",
 						"#ff7f00",
-						"#cab2d6",
-						"#6a3d9a"];
+						"#33a02c",
+						"#e31a1c",
+						"#6a3d9a",
+						"#a6cee3",
+						"#fdbf6f",
+						"#b2df8a",
+						"#fb9a99",
+						"#cab2d6"];
 
 function groupsChooserView(where){
 	var container = d3.select(where);
 	var that=this;
 
-	var w =1000;
-	var h=100;
+	var w =100;
+	var h=1000;
 	this.svgW = w;
 	this.svgH = h;
 
@@ -34,7 +34,7 @@ function groupsChooserView(where){
 	var len = activeColorScale.length;
 	
 	var svg = container.append("svg").attr("class","mosaicSvg")
-									.attr("viewBox","0 0 " + (w + padding * (2 + len))+ " " + (h + padding * 2));
+									.attr("viewBox","0 0 " + (w + padding * 2)+ " " + (h + padding * (2 + len)));
 	this.onClickFun = function(){};
 	
 	// Show the color circles
@@ -55,12 +55,17 @@ function groupsChooserView(where){
 							.style("stroke",function(d){
 								return activeColorScale[d];
 							})
-							.attr("cx", function(d){
+							/*.attr("cx", function(d){
 								
 								return d * w / len + padding * d;
 							})
 							.attr("cy", h/2)
-							.attr("r", Math.min(h/2, w / len/2))
+							.attr("r", Math.min(h/2, w / len/2))*/
+							.attr("cx", w/2 + padding)
+							.attr("cy", function(d) {
+								return d * h / len + padding * d;
+							})
+							.attr("r", Math.min(h/ len/2, w /2))
 							.on("mouseup",function(j){
 								if (colorScale[j]==activeColorScale[j]){
 									colorScale[j] = colorScale[0];

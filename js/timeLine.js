@@ -11,7 +11,7 @@ function timelineView(where,data){
 
 	var padding = 10;
 
-	this.minTime = 0;
+	this.minTime = 20;
 	this.span = 10;
 	this.onChangeFunc = function(){};
 
@@ -156,9 +156,9 @@ function timelineView(where,data){
     	
     }
 
-    this.changeData= function(data){
-    	this.minTime = 0;
-    	this.span = 10;
+    this.changeData= function(data, min, span){
+    	this.minTime = min; //0;
+    	this.span = span; //10;
     	this.numOfTimes = 0;
     	var maxS = 0;
 		for (var i in data){
