@@ -83,11 +83,12 @@ function timelineView(where,data){
 	this.numOfTimes = 0;
 
 
-	var maxS = 0;
+    var maxS = 10000;
+	//ar maxS = 0;
 
 	for (var i in data){
 		this.numOfTimes +=1;
-		maxS = (data[i][0] > maxS )? data[i][0] : maxS;
+		//maxS = (data[i][0] > maxS )? data[i][0] : maxS;
 	}
 
 
@@ -160,10 +161,10 @@ function timelineView(where,data){
     	this.minTime = min; //0;
     	this.span = span; //10;
     	this.numOfTimes = 0;
-    	var maxS = 0;
+    	var maxS = 10000;
 		for (var i in data){
 			this.numOfTimes +=1;
-			maxS = (data[i][0] > maxS )? data[i][0] : maxS;
+			//maxS = (data[i][0] > maxS )? data[i][0] : maxS;
 
 		}
 
