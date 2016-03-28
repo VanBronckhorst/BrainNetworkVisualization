@@ -1,3 +1,7 @@
+var overallColor={};
+var overallColorLeft={};
+var overallColorRight={};
+
 function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData,grayData){
 	var container = d3.select(where);
 	container.selectAll("*").remove();
@@ -72,8 +76,10 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData,gra
 											that.zoom = new zoomView(that.zoomDiv,that.commData,pixels,that.minTimeShown,that.span);
 											that.onZoomFun(pixels , d);
 										} else if (that.action=="sword"){
+											// color star plot with its most common community color
+											overallColor[r* this.cols + c] = that.mostCommon(d["r"],d["c"]);
 											that.sword = new swordPlot(SWORD_ID,that.commData,(d["r"])* that.cols + d["c"],grayData );
-											that.star = new starPlot(starID,netData,(d["r"])* that.cols + d["c"] );
+											that.star = new starPlot(starID,netData,(d["r"])* that.cols + d["c"]);
 										} else if (that.action == "KNN"){
 											that.onKNNFun(that.commData,(d["r"]* that.cols + d["c"] ),that.minTimeShown,that.span);
 										}
@@ -153,7 +159,7 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData,gra
 		}
 
 		for (var i = this.minTimeShown; i< this.minTimeShown + this.span; i++){
-			colors[colorScale[this.commData[i][r* this.cols + c][0]]] +=1
+			colors[colorScale[this.commData[i][r* this.cols + c][0]]] +=1;//gcolor
 		}
 
 		colors[colorScale[0]] = 0;
@@ -169,7 +175,8 @@ function mosaicView(where,rows,cols,commData,min,span,swordID,starID,netData,gra
 				maxInd = j;
 			}
 		}
-
+		
+		overallColor[r* this.cols + c] = colorScale[maxInd];
 		return colorScale[maxInd];
 	}
 

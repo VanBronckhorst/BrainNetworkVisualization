@@ -29,8 +29,8 @@ function swordPlot(where,data,pixel,grayData){
 	for (var i=0; i<times;i++){
 		var d = data[i][pixel];
 
-		upperColor.push(d[0]);
-		lowerColor.push(d[1]);
+		upperColor.push(d[0]); //gcolor
+		lowerColor.push(d[1]); //icolor
 		if (d[2]){
 			degree.push(d[2]);
 			if (d[2]>max){

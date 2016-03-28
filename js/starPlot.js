@@ -54,7 +54,9 @@ function starPlot(where,data, pixel){
 		d+= "Z";
 
 		var line = svg.append("path").attr("d",d)
-									 .attr("class","starPlotPath");
+		                             .attr("fill",overallColor[pixel])
+									 .attr("stroke","black")
+									 //.attr("class","starPlotPath");
 	}
 
 }
@@ -115,6 +117,7 @@ function overallStarPlot(where,data){
 		d+= "Z";
 
 		var line = svg.append("path").attr("d",d)
-									 .attr("class","overallStarPlotPath");
+									.attr("stroke",overallColor[pixel])
+									.attr("class","overallStarPlotPath");
 	}
 }

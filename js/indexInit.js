@@ -11,12 +11,18 @@ function initWithData(data,dataRight,sizeData,sizeDataRight,network,networkRight
 	var r = 130;
 	var c = 172;
 
-	var sword = new swordPlot("#swordDivContainerLeft",data,1,[]);
-	var swordRight = new swordPlot("#swordDivContainerRight",dataRight,1,[]);
-
-	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data,20,10,"#swordDivContainerLeft","#starPlotDivContainerLeft",network,grayData);
-	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,dataRight,20,10,"#swordDivContainerRight","#starPlotDivContainerRight",networkRight,grayData2);
+	var sword = new swordPlot("#swordDivContainerLeft",data,1,grayData);
+	var swordRight = new swordPlot("#swordDivContainerRight",dataRight,1,grayData2);
 	
+	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data,20,10,"#swordDivContainerLeft","#starPlotDivContainerLeft",network,grayData);
+	var overallLeft = new overallStarPlot("#overallStarPlotDivContainerLeft",network);
+
+	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,dataRight,20,10,"#swordDivContainerRight","#starPlotDivContainerRight",networkRight,grayData2);
+	var overallRight = new overallStarPlot("#overallStarPlotDivContainerRight",networkRight);
+
+	  
+	var star = new starPlot("#starPlotDivContainerLeft",network,1);
+	var starRight = new starPlot("#starPlotDivContainerRight",networkRight,1);
 	
 	var legend = new starPlotLegendView("#starPlotLegend");
 	
@@ -99,8 +105,7 @@ function initWithData(data,dataRight,sizeData,sizeDataRight,network,networkRight
 						    })
     );
 
-    var overallLeft = new overallStarPlot("#overallStarPlotDivContainerLeft",network);
-    var overallRight = new overallStarPlot("#overallStarPlotDivContainerRight",networkRight);
+    
     d3.select("#overallStarPlotDivContainerLeft").style("visibility","hidden");
 	d3.select("#overallStarPlotDivContainerRight").style("visibility","hidden");
 
@@ -131,6 +136,10 @@ function changeLeftData(data,sizeData,netData,grayData){
 	timeLine.changeData(sizeData,timeLineRight.minTime,timeLineRight.span);
 	mosaic = new mosaicView("#mosaicDivContainerLeft",r,c,data,timeLineRight.minTime,timeLineRight.span ,"#swordDivContainerLeft","#starPlotDivContainerLeft",netData,grayData);
 	
+	var overall = new overallStarPlot("#overallStarPlotDivContainerLeft",netData);	
+    var sword = new swordPlot("#swordDivContainerLeft",data,1,grayData);
+	var star = new starPlot("#starPlotDivContainerLeft",netData,1);
+	
 	//mosaic.onKNN(knnFun);
 	mosaic.onZoom(function(pixels,d){
 		if (zoomSync){
@@ -138,8 +147,7 @@ function changeLeftData(data,sizeData,netData,grayData){
 		}
 	})
 
-	var overall = new overallStarPlot("#overallStarPlotDivContainerLeft",netData);
-	
+		
 	d3.select("#overallStarPlotDivContainerLeft").style("visibility","hidden");
 	d3.select("#overallStarPlotDivContainerRight").style("visibility","hidden");
 	
@@ -154,6 +162,10 @@ function changeRightData(data,sizeData,netData,grayData){
 	timeLineRight.changeData(sizeData,timeLine.minTime,timeLine.span);
 	mosaicRight = new mosaicView("#mosaicDivContainerRight",r,c,data,timeLine.minTime,timeLine.span,"#swordDivContainerRight","#starPlotDivContainerRight",netData,grayData);
 	
+	var overall = new overallStarPlot("#overallStarPlotDivContainerRight",netData);	
+	var swordRight = new swordPlot("#swordDivContainerRight",data,1,grayData);
+	var starRight = new starPlot("#starPlotDivContainerRight",netData,1);
+	
     //mosaicRight.onKNN(knnFun);
     mosaicRight.onZoom(function(pixels,d){
 		if (zoomSync){
@@ -161,7 +173,6 @@ function changeRightData(data,sizeData,netData,grayData){
 		}
 	})
 
-	var overall = new overallStarPlot("#overallStarPlotDivContainerRight",netData);
 	
 	d3.select("#overallStarPlotDivContainerRight").style("visibility","hidden");
 	d3.select("#overallStarPlotDivContainerLeft").style("visibility","hidden");
@@ -238,68 +249,68 @@ function starPlotLegendView(where){
 		   .attr("text-anchor", "start")
 		   .attr("font-size", 16)
 		   .style("fill", "black")
-		   .text("0 - observed");	
+		   .text("0 - Observed");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 48 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
 		   .attr("font-size", 16)
 		   .style("fill", "black")
-		   .text("1 - time span");	
+		   .text("1 - Time span");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 66 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
 		   .attr("font-size", 16)
 		   .style("fill", "black")
-		   .text("2 - switching");	
+		   .text("2 - Switching");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 84 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
 		   .attr("font-size", 16)
 		   .style("fill", "black")
-		   .text("3 - absence");	
+		   .text("3 - Absence");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 102 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
 		   .attr("font-size", 16)
 		   .style("fill", "black")
-		   .text("4 - visiting");	
+		   .text("4 - Visiting");	
     svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 120 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
 		   .attr("font-size", 16)
 		   .style("fill", "black")
-		   .text("5 - homing");	
+		   .text("5 - Homing");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 138 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
 		   .attr("font-size", 16)
 		   .style("fill", "black")
-		   .text("6 - avg group size");	
+		   .text("6 - Ave group size");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 156 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
 		   .attr("font-size", 16)
 		   .style("fill", "black")
-		   .text("7 - avg community size");	
+		   .text("7 - Ave community size");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 174 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
 		   .attr("font-size", 16)
 		   .style("fill", "black")
-		   .text("8 - avg community stay");	
+		   .text("8 - Ave community stay");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 192 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
 		   .attr("font-size", 16)
 		   .style("fill", "black")
-		   .text("9 - max community stay");				 
+		   .text("9 - Max community stay");				 
 }
