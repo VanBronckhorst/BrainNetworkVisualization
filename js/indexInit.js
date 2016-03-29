@@ -239,78 +239,78 @@ function starPlotLegendView(where){
 		   .attr("transform", "translate(" + 4 + "," + 10 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
-		   .attr("font-size", 18)
+		   .attr("font-size", 16)
 		   .style("fill", "black")
-		   .text("Star Plot Axes:");
+		   .text("Network/Node Attributes:");
 		   
     svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 30 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
-		   .attr("font-size", 16)
+		   .attr("font-size", 14)
 		   .style("fill", "black")
 		   .text("0 - Observed");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 48 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
-		   .attr("font-size", 16)
+		   .attr("font-size", 14)
 		   .style("fill", "black")
 		   .text("1 - Time span");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 66 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
-		   .attr("font-size", 16)
+		   .attr("font-size", 14)
 		   .style("fill", "black")
 		   .text("2 - Switching");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 84 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
-		   .attr("font-size", 16)
+		   .attr("font-size", 14)
 		   .style("fill", "black")
 		   .text("3 - Absence");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 102 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
-		   .attr("font-size", 16)
+		   .attr("font-size", 14)
 		   .style("fill", "black")
 		   .text("4 - Visiting");	
     svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 120 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
-		   .attr("font-size", 16)
+		   .attr("font-size", 14)
 		   .style("fill", "black")
 		   .text("5 - Homing");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 138 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
-		   .attr("font-size", 16)
+		   .attr("font-size", 14)
 		   .style("fill", "black")
-		   .text("6 - Ave group size");	
+		   .text("6 - Avg group size");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 156 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
-		   .attr("font-size", 16)
+		   .attr("font-size", 14)
 		   .style("fill", "black")
-		   .text("7 - Ave community size");	
+		   .text("7 - Avg community size");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 174 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
-		   .attr("font-size", 16)
+		   .attr("font-size", 14)
 		   .style("fill", "black")
-		   .text("8 - Ave community stay");	
+		   .text("8 - Avg community stay");	
 	svg.append("text")
 		   .attr("transform", "translate(" + 6 + "," + 192 + ")")
 		   .attr("dy", ".35em")
 		   .attr("text-anchor", "start")
-		   .attr("font-size", 16)
+		   .attr("font-size", 14)
 		   .style("fill", "black")
 		   .text("9 - Max community stay");				 
 }

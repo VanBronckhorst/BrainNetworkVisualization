@@ -146,16 +146,16 @@ body{
 	top:2%;
 	height: 30%;
 	width: 14%;
-	border: solid 1px black;
+
 }
 
 .toolBoxDiv{
 	position: absolute;
 	left:85%;
-	top:34%;
-	height: 64%;
+	top:36%;
+	height: 63%;
 	width: 14%;
-	border: solid 1px black;
+
 }
 
 .actionChooserContainerDiv{
@@ -167,7 +167,7 @@ body{
 }
 .sliderDivContainer{
 	position: absolute;
-	left:0%;
+	left:2%;
 	top:16%;
 	height: 15%;
 	width: 100%;
